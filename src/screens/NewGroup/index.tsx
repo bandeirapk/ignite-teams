@@ -12,20 +12,15 @@ export function NewGroup() {
 
       <Content>
         <Icon />
-        <Highlight 
-          title="Nova Turma"
-          subtitle="crie uma nova turma para adicionar pessoas"
+        <Highlight
+          title='Nova Turma'
+          subtitle='crie uma nova turma para adicionar pessoas'
         />
 
-        <Input 
-          placeholder="Nome da turma"
-        />
+        <Input placeholder='Nome da turma' />
 
-        <Button 
-          title="Criar"
-          style={{ marginTop: 20}}
-        />
-      </Content> 
+        <Button title='Criar' style={{ marginTop: 20 }} />
+      </Content>
     </Container>
   );
 }
