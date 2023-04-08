@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 import { FlatList } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
+import {
+  useNavigation,
+  useFocusEffect,
+} from '@react-navigation/native';
+
+import { groupsGetAll } from '@storage/group/groupsGetAll';
 
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
@@ -12,29 +17,29 @@ import { Button } from '@components/Button';
 
 import { Container } from './styles';
 
-// type RootParamList = {
-//   groups: undefined;
-//   new: undefined;
-//   players: {
-//     group: string;
-//   };
-// };
-
-// type Props = {
-//   navigation: NativeStackNavigationProp<
-//     RootParamList,
-//     'groups'
-//   >;
-// };
-
 export function Groups() {
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState<string[]>([]);
 
   const navigation = useNavigation();
 
   function handleNewGroup() {
     navigation.navigate('new');
   }
+
+  async function fetchGroups() {
+    try {
+      const data = await groupsGetAll();
+      setGroups(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchGroups();
+    }, [])
+  );
 
   return (
     <Container>
